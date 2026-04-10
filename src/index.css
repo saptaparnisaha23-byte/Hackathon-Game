@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 207 52% 11%;
+    --foreground: 55 100% 95%;
+
+    --card: 207 45% 15%;
+    --card-foreground: 55 100% 95%;
+
+    --popover: 207 45% 13%;
+    --popover-foreground: 55 100% 95%;
+
+    --primary: 0 100% 71%;
+    --primary-foreground: 207 52% 8%;
+
+    --secondary: 36 100% 55%;
+    --secondary-foreground: 207 52% 8%;
+
+    --muted: 207 30% 20%;
+    --muted-foreground: 207 20% 60%;
+
+    --accent: 160 94% 44%;
+    --accent-foreground: 207 52% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --gold: 59 100% 70%;
+    --gold-foreground: 207 52% 8%;
+
+    --border: 207 30% 25%;
+    --input: 207 30% 25%;
+    --ring: 0 100% 71%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 207 45% 10%;
+    --sidebar-foreground: 55 100% 95%;
+    --sidebar-primary: 0 100% 71%;
+    --sidebar-primary-foreground: 207 52% 8%;
+    --sidebar-accent: 207 30% 20%;
+    --sidebar-accent-foreground: 55 100% 95%;
+    --sidebar-border: 207 30% 25%;
+    --sidebar-ring: 0 100% 71%;
+
+    --font-heading: 'Lilita One', cursive;
+    --font-body: 'Nunito', sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Glowing effects */
+.glow-coral {
+  box-shadow: 0 0 20px hsl(0 100% 71% / 0.5), 0 0 40px hsl(0 100% 71% / 0.2);
+}
+
+.glow-teal {
+  box-shadow: 0 0 20px hsl(160 94% 44% / 0.5), 0 0 40px hsl(160 94% 44% / 0.2);
+}
+
+.glow-gold {
+  box-shadow: 0 0 20px hsl(59 100% 70% / 0.5), 0 0 40px hsl(59 100% 70% / 0.2);
+}
+
+.glow-orange {
+  box-shadow: 0 0 20px hsl(36 100% 55% / 0.5), 0 0 40px hsl(36 100% 55% / 0.2);
+}
+
+/* Tiki text glow */
+.text-glow {
+  text-shadow: 0 0 20px hsl(59 100% 70% / 0.6), 0 0 40px hsl(36 100% 55% / 0.3);
+}
+
+/* Wooden texture bg */
+.bg-wood {
+  background: linear-gradient(135deg, hsl(30 40% 20%), hsl(25 35% 15%));
+  background-image: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      hsl(30 30% 18% / 0.3) 2px,
+      hsl(30 30% 18% / 0.3) 4px
+    );
+}
+
+/* Volcano gradient */
+.bg-volcano {
+  background: radial-gradient(ellipse at bottom, hsl(0 80% 25%) 0%, hsl(0 60% 15%) 40%, hsl(207 52% 11%) 80%);
+}
+
+/* Neon border pulse */
+@keyframes neon-pulse {
+  0%, 100% { box-shadow: 0 0 5px currentColor, 0 0 15px currentColor; }
+  50% { box-shadow: 0 0 10px currentColor, 0 0 30px currentColor, 0 0 50px currentColor; }
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+/* Torch flicker */
+@keyframes torch-flicker {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  25% { opacity: 0.8; transform: scaleY(0.95); }
+  50% { opacity: 1; transform: scaleY(1.05); }
+  75% { opacity: 0.9; transform: scaleY(0.98); }
+}
+
+.animate-torch {
+  animation: torch-flicker 0.5s ease-in-out infinite;
+}
+
+/* Track position platform */
+.track-platform {
+  background: linear-gradient(180deg, hsl(30 40% 35%) 0%, hsl(30 35% 25%) 100%);
+  border: 2px solid hsl(30 30% 40%);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(207 45% 12%);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(207 30% 30%);
+  border-radius: 4px;
+}
+
+/* Floating particles */
+@keyframes float-up {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+.particle {
+  animation: float-up linear infinite;
+}
