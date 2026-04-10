@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Users, Bot, Wifi, Gamepad2 } from 'lucide-react';
 
 const Index = () => {
   const navigate = useNavigate();
   const [hoveredMode, setHoveredMode] = useState<string | null>(null);
+  const [showSetup, setShowSetup] = useState(false);
+  const [playerNames, setPlayerNames] = useState<string[]>(['Moai', 'Hibiscus', 'Turtle', 'Parrot']);
 
   const modes = [
     {
@@ -94,7 +96,13 @@ const Index = () => {
               whileTap={{ scale: 0.98 }}
               onHoverStart={() => setHoveredMode(mode.id)}
               onHoverEnd={() => setHoveredMode(null)}
-              onClick={() => navigate(mode.path)}
+              onClick={() => {
+                if (mode.id === 'hotseat') {
+                  setShowSetup(true);
+                } else {
+                  navigate(mode.path);
+                }
+              }}
               className={`
                 relative px-8 py-6 rounded-2xl font-heading text-xl
                 bg-gradient-to-br ${mode.gradient}
@@ -130,6 +138,75 @@ const Index = () => {
           </div>
         </motion.div>
       </motion.div>
+
+      {/* Hotseat Setup Modal */}
+      <AnimatePresence>
+        {showSetup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-background/90 backdrop-blur-md p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.8, y: 50 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.8, y: 50 }}
+              className="bg-wood rounded-2xl border border-border p-6 max-w-sm w-full"
+            >
+              <h2 className="font-heading text-secondary text-2xl text-center mb-6 text-glow">
+                Player Setup
+              </h2>
+              
+              <div className="flex flex-col gap-4 mb-6">
+                {playerNames.map((name, idx) => (
+                  <div key={idx} className="flex flex-col gap-1">
+                    <label className="text-sm font-body text-muted-foreground ml-1">
+                      Player {idx + 1}
+                    </label>
+                    <input
+                      type="text"
+                      maxLength={15}
+                      value={name}
+                      onChange={(e) => {
+                        const newNames = [...playerNames];
+                        newNames[idx] = e.target.value;
+                        setPlayerNames(newNames);
+                      }}
+                      className="px-4 py-2 bg-background/50 border border-border rounded-xl font-body text-foreground focus:outline-none focus:border-coral transition-colors"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex gap-3">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setShowSetup(false)}
+                  className="flex-1 py-3 rounded-xl font-heading bg-muted text-muted-foreground"
+                >
+                  Cancel
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    const params = new URLSearchParams();
+                    params.append('mode', 'hotseat');
+                    params.append('players', '4');
+                    playerNames.forEach((n, i) => params.append(`p${i}`, n));
+                    navigate(`/play?${params.toString()}`);
+                  }}
+                  className="flex-1 py-3 rounded-xl font-heading bg-gradient-to-r from-coral to-primary text-primary-foreground glow-coral"
+                >
+                  Start Game
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

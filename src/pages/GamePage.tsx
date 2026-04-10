@@ -15,9 +15,10 @@ interface GamePageProps {
   mode: GameMode;
   numPlayers: number;
   aiPlayerIds: number[];
+  playerNames?: string[];
 }
 
-export default function GamePage({ mode, numPlayers, aiPlayerIds }: GamePageProps) {
+export default function GamePage({ mode, numPlayers, aiPlayerIds, playerNames }: GamePageProps) {
   const navigate = useNavigate();
   const {
     gameState,
@@ -29,7 +30,7 @@ export default function GamePage({ mode, numPlayers, aiPlayerIds }: GamePageProp
     confirmReorder,
     cancelReorder,
     resetGame,
-  } = useGame({ mode, numPlayers, aiPlayerIds });
+  } = useGame({ mode, numPlayers, aiPlayerIds, playerNames });
 
   const trackTokens = useMemo(() => {
     if (!gameState) return new Map<number, Token[]>();

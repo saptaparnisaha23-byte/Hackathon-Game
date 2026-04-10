@@ -131,16 +131,16 @@ export class TokenStack {
 export class GameLogic {
   private state: GameState;
 
-  constructor(numPlayers: number = 4, aiPlayers: number[] = []) {
-    this.state = this.initializeGame(numPlayers, aiPlayers);
+  constructor(numPlayers: number = 4, aiPlayers: number[] = [], playerNames?: string[]) {
+    this.state = this.initializeGame(numPlayers, aiPlayers, playerNames);
   }
 
   /** Initialize a new game with shuffled tokens */
-  private initializeGame(numPlayers: number, aiPlayers: number[]): GameState {
+  private initializeGame(numPlayers: number, aiPlayers: number[], customNames?: string[]): GameState {
     // Create players
     const players: Player[] = Array.from({ length: numPlayers }, (_, i) => ({
       id: i,
-      name: PLAYER_NAMES[i],
+      name: customNames && customNames[i] ? customNames[i] : PLAYER_NAMES[i],
       isAI: aiPlayers.includes(i),
       score: 0,
       avatar: PLAYER_AVATARS[i],

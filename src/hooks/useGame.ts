@@ -8,9 +8,10 @@ interface UseGameOptions {
   mode: GameMode;
   numPlayers: number;
   aiPlayerIds?: number[];
+  playerNames?: string[];
 }
 
-export function useGame({ mode, numPlayers, aiPlayerIds = [] }: UseGameOptions) {
+export function useGame({ mode, numPlayers, aiPlayerIds = [], playerNames }: UseGameOptions) {
   const gameRef = useRef<GameLogic | null>(null);
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [selectedTokens, setSelectedTokens] = useState<number[]>([]);
@@ -19,12 +20,12 @@ export function useGame({ mode, numPlayers, aiPlayerIds = [] }: UseGameOptions) 
   const [animatingTokens, setAnimatingTokens] = useState<number[]>([]);
 
   const initGame = useCallback(() => {
-    const game = new GameLogic(numPlayers, aiPlayerIds);
+    const game = new GameLogic(numPlayers, aiPlayerIds, playerNames);
     gameRef.current = game;
     setGameState(game.getState());
     setSelectedTokens([]);
     setIsReordering(false);
-  }, [numPlayers, aiPlayerIds]);
+  }, [numPlayers, aiPlayerIds, playerNames]);
 
   useEffect(() => {
     initGame();

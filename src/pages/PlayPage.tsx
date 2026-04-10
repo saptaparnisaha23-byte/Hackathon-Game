@@ -10,11 +10,20 @@ export default function PlayPage() {
   const aiParam = searchParams.get('ai') || '';
   const aiPlayerIds = aiParam ? aiParam.split(',').map(Number) : [];
 
+  const playerNames: string[] = [];
+  for (let i = 0; i < numPlayers; i++) {
+    const name = searchParams.get(`p${i}`);
+    if (name) {
+      playerNames[i] = name;
+    }
+  }
+
   return (
     <GamePage
       mode={mode}
       numPlayers={numPlayers}
       aiPlayerIds={aiPlayerIds}
+      playerNames={playerNames.length > 0 ? playerNames : undefined}
     />
   );
 }

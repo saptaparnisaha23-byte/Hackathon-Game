@@ -25,7 +25,7 @@ export function MasterStack({ tokens, topGlowCount, animatingTokens }: MasterSta
         
         {/* Stack container */}
         <div 
-          className="relative bg-card/80 backdrop-blur-sm rounded-2xl border border-border p-4 min-h-[200px] w-[100px] flex flex-col-reverse items-center gap-1"
+          className="relative bg-card/80 backdrop-blur-sm rounded-2xl border border-border p-4 min-h-[200px] w-[100px] flex flex-col justify-end items-center gap-1"
           style={{ perspective: '800px' }}
         >
           {tokens.length === 0 && (
